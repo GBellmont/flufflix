@@ -1,0 +1,5 @@
+{
+  "API_KEY": "Chave de Leitura da API: 'The Movie Database'",
+  "BASE_IMAGES_URL": "Url de acesso as imagems da API: 'The Movie Database'",
+  "BASE_URL": "Url  Base da API TMDB: 'The Movie Database'"
+}
