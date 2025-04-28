@@ -1,8 +1,12 @@
+import 'package:flufflix/pages/index.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flufflix/components/buttons/styled_button.dart';
+import 'package:flufflix/components/buttons/index.dart';
+import 'package:go_router/go_router.dart';
 
 class LandingPage extends StatelessWidget {
+  static const String route = '/login';
+
   const LandingPage({super.key});
 
   @override
@@ -47,7 +51,8 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                StyledButton(onPressed: () {}, text: "Login"),
+                StyledButton(
+                    onPressed: () => context.go(HomePage.route), text: "Login"),
                 StyledButton(onPressed: () {}, text: "Sign Up", primary: false)
               ],
             ),
