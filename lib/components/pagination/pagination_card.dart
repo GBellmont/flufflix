@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:flufflix/components/pagination/contract/index.dart';
 import 'package:flufflix/core/constants/index.dart';
-import 'package:flutter/material.dart';
 
 class PaginationCard<E extends PaginationCardContract> extends StatelessWidget {
   final E item;

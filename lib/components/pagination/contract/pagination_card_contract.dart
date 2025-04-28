@@ -1,4 +1,4 @@
-class PaginationCardContract {
+abstract class PaginationCardContract {
   final int id;
   final String title;
   final String imagePath;

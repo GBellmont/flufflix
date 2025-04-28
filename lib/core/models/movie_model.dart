@@ -7,4 +7,7 @@ class Movie extends PaginationCardContract {
   factory Movie.fromJson(Map<String, dynamic> jsonItem) {
     return Movie(jsonItem['id'], jsonItem['title'], jsonItem['poster_path']);
   }
+
+  Map<String, dynamic> get toJson =>
+      ({'id': id, 'title': title, 'poster_path': imagePath});
 }

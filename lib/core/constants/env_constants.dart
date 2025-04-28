@@ -1,4 +1,4 @@
-class EnvConstants {
+final class EnvConstants {
   static EnvConstants? _instance;
 
   final String apiKey;
