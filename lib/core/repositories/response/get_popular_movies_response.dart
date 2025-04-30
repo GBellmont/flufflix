@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flufflix/components/pagination/contract/index.dart';
 import 'package:flufflix/core/constants/index.dart';
 import 'package:flufflix/core/models/index.dart';
 
 class GetPopularMoviesResponse extends GetPaginationListContract<Movie> {
+  final int totalPages;
+
   const GetPopularMoviesResponse(
-      int page, bool isFirst, bool isLast, List<Movie> list)
+      int page, bool isFirst, bool isLast, List<Movie> list, this.totalPages)
       : super(page: page, isFirst: isFirst, isLast: isLast, list: list);
 
   factory GetPopularMoviesResponse.fromJson(Map<String, dynamic> jsonResponse) {
@@ -19,6 +23,13 @@ class GetPopularMoviesResponse extends GetPaginationListContract<Movie> {
         page,
         (page == MoviesConstants.defaultFirstPageMovies),
         (page >= totalPages),
-        moviesList);
+        moviesList,
+        totalPages);
   }
+
+  String get toJson => jsonEncode({
+        'results': list.map((item) => item.toJson).toList(),
+        'total_pages': totalPages,
+        'page': page
+      });
 }

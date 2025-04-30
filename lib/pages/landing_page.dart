@@ -1,8 +1,8 @@
-import 'package:flufflix/pages/index.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:flufflix/components/buttons/index.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flufflix/pages/index.dart';
 
 class LandingPage extends StatelessWidget {
   static const String route = '/login';

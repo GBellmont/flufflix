@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:flufflix/components/pagination/index.dart';
 import 'package:flufflix/core/models/index.dart';
 import 'package:flufflix/core/repositories/index.dart';
 import 'package:flufflix/core/repositories/response/index.dart';
-import 'package:flutter/material.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -12,6 +13,14 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
+  late final MovieRepository movieRepository;
+
+  @override
+  void initState() {
+    movieRepository = MovieRepository();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,13 +35,13 @@ class _InitialPageState extends State<InitialPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 15, top: 20),
             child: PaginationList<Movie, GetPopularMoviesResponse>(
-              getPaginationList: MovieRepository().getPopularMovies,
+              getPaginationList: movieRepository.getPopularMovies,
               listTitle: 'Popular Movies',
               fetchListErrorMessage: 'Error loading popular movies',
             ),
           ),
           PaginationList<Movie, GetTopRatedMoviesResponse>(
-            getPaginationList: MovieRepository().getTopRatedMovies,
+            getPaginationList: movieRepository.getTopRatedMovies,
             listTitle: 'Top Rated Movies',
             fetchListErrorMessage: 'Error loading top rated movies',
           )

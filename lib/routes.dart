@@ -1,5 +1,6 @@
-import 'package:flufflix/pages/index.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:flufflix/pages/index.dart';
 
 final router = GoRouter(
     initialLocation: LandingPage.route,

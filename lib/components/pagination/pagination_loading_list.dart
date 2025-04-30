@@ -9,7 +9,7 @@ class PaginationLoadingList extends StatelessWidget {
     return SizedBox(
       height: 180,
       child: ListView.builder(
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(left: 10),
         scrollDirection: Axis.horizontal,
         itemCount: 10,
         itemBuilder: (_, index) => Shimmer.fromColors(

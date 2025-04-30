@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flufflix/components/buttons/index.dart';
 import 'package:flufflix/components/pagination/contract/index.dart';
 import 'package:flufflix/components/pagination/index.dart';
-import 'package:flutter/material.dart';
 
 enum PaginationListState {
   empty,
@@ -37,17 +39,16 @@ class _PaginationList<E extends PaginationCardContract,
 
   @override
   void initState() {
-    super.initState();
-
     _fecthList(_page);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    super.initState();
   }
 
   Future<void> _fecthList(int page) async {
+    if (_state == PaginationListState.empty) {
+      final storage = await SharedPreferences.getInstance();
+      await storage.clear();
+    }
+
     setState(() {
       _state = PaginationListState.loading;
     });
