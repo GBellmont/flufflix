@@ -1,16 +1,12 @@
+import 'package:flufflix/core/blocs/pagination/pagination_bloc.dart';
+import 'package:flufflix/core/events/pagination/pagination_event.dart';
+import 'package:flufflix/core/states/pagination/pagination_state.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flufflix/components/buttons/index.dart';
 import 'package:flufflix/components/pagination/contract/index.dart';
 import 'package:flufflix/components/pagination/index.dart';
-
-enum PaginationListState {
-  empty,
-  loading,
-  error,
-  success;
-}
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaginationList<E extends PaginationCardContract,
     T extends GetPaginationListContract<E>> extends StatefulWidget {
@@ -31,43 +27,21 @@ class PaginationList<E extends PaginationCardContract,
 class _PaginationList<E extends PaginationCardContract,
         T extends GetPaginationListContract<E>>
     extends State<PaginationList<E, T>> {
-  List<E> _list = [];
-  int _page = 1;
-  bool _isFirst = false;
-  bool _isLast = true;
-  PaginationListState _state = PaginationListState.empty;
+  late final PaginationBloc<T> _paginationBloc;
 
   @override
   void initState() {
-    _fecthList(_page);
+    _paginationBloc =
+        PaginationBloc<T>(getPaginationList: widget.getPaginationList);
+    _paginationBloc.add(FetchPaginationListEvent(page: 1));
+
     super.initState();
   }
 
-  Future<void> _fecthList(int page) async {
-    if (_state == PaginationListState.empty) {
-      final storage = await SharedPreferences.getInstance();
-      await storage.clear();
-    }
-
-    setState(() {
-      _state = PaginationListState.loading;
-    });
-
-    try {
-      final listResponse = await widget.getPaginationList(page: page);
-
-      setState(() {
-        _list = listResponse.list;
-        _state = PaginationListState.success;
-        _isFirst = listResponse.isFirst;
-        _isLast = listResponse.isLast;
-        _page = listResponse.page;
-      });
-    } catch (e) {
-      setState(() {
-        _state = PaginationListState.error;
-      });
-    }
+  @override
+  void dispose() {
+    _paginationBloc.close();
+    super.dispose();
   }
 
   @override
@@ -87,45 +61,59 @@ class _PaginationList<E extends PaginationCardContract,
                   fontWeight: FontWeight.w700),
             ),
           ),
-          if (_state == PaginationListState.empty ||
-              _state == PaginationListState.loading)
-            const PaginationLoadingList()
-          else if (_state == PaginationListState.error)
-            PaginationListError(
-              onRetry: () => _fecthList(_page),
-              message: widget.fetchListErrorMessage,
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: SizedBox(
-                height: 180,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount:
-                      _list.length + (!_isFirst ? 1 : 0) + (!_isLast ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    if (!_isFirst && index == 0) {
-                      return PaginationButton(
-                        onPressed: () => _fecthList(_page - 1),
-                      );
-                    }
+          BlocBuilder<PaginationBloc, PaginationState>(
+              bloc: _paginationBloc,
+              builder: (context, state) {
+                return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: switch (state) {
+                      PaginationInitialState() => const PaginationLoadingList(),
+                      PaginationLoadingState() => const PaginationLoadingList(),
+                      PaginationErrorState(pageToRetrie: var page) =>
+                        PaginationListError(
+                          onRetry: () => _paginationBloc
+                              .add(FetchPaginationListEvent(page: page)),
+                          message: widget.fetchListErrorMessage,
+                        ),
+                      PaginationSuccessState<T>(data: T responseData) =>
+                        SizedBox(
+                          height: 180,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: responseData.list.length +
+                                (!responseData.isFirst ? 1 : 0) +
+                                (!responseData.isLast ? 1 : 0),
+                            itemBuilder: (context, index) {
+                              if (!responseData.isFirst && index == 0) {
+                                return PaginationButton(
+                                  onPressed: () => _paginationBloc.add(
+                                      FetchPaginationListEvent(
+                                          page: responseData.page - 1)),
+                                );
+                              }
 
-                    if (!_isLast &&
-                        index == _list.length + (!_isFirst ? 1 : 0)) {
-                      return PaginationButton(
-                        onPressed: () => _fecthList(_page + 1),
-                        right: true,
-                      );
-                    }
+                              if (!responseData.isLast &&
+                                  index ==
+                                      responseData.list.length +
+                                          (!responseData.isFirst ? 1 : 0)) {
+                                return PaginationButton(
+                                  onPressed: () => _paginationBloc.add(
+                                      FetchPaginationListEvent(
+                                          page: responseData.page + 1)),
+                                  right: true,
+                                );
+                              }
 
-                    return PaginationCard(
-                      item: _list[index - (!_isFirst ? 1 : 0)],
-                    );
-                  },
-                ),
-              ),
-            ),
+                              return PaginationCard(
+                                item: responseData.list[
+                                    index - (!responseData.isFirst ? 1 : 0)],
+                              );
+                            },
+                          ),
+                        ),
+                      _ => const SizedBox.shrink()
+                    });
+              }),
         ],
       ),
     );
