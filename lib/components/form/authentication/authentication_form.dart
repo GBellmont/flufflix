@@ -138,13 +138,12 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                         AuthenticationFormState>(
                     bloc: _authenticationFormBloc,
                     builder: (context, state) {
-                      final buttonText =
-                          widget.isSignUp ? 'Create Account' : 'Login';
-
                       switch (state) {
                         case AuthenticationFormStateInitial():
                           return StyledButton(
-                              onPressed: onSubmitForm, text: buttonText);
+                              onPressed: onSubmitForm,
+                              text:
+                                  widget.isSignUp ? 'Create Account' : 'Login');
                         case AuthenticationFormStateLoading():
                           return StyledButton(
                               onPressed: () {}, isLoading: true, text: '');
@@ -155,10 +154,10 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                               text: 'Retry');
                         case AuthenticationFormStateLoginSucceeded():
                           return StyledButton(
-                              onPressed: () {}, text: buttonText);
+                              onPressed: () {}, isLoading: true, text: '');
                         case AuthenticationFormStateSignUpSucceeded():
                           return StyledButton(
-                              onPressed: () {}, text: buttonText);
+                              onPressed: () {}, isLoading: true, text: '');
                       }
                     }),
               ),
