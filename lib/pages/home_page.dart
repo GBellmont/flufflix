@@ -1,49 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-final tabs = [
-  HomePage.route,
-  '/search',
-  '/favorites',
-  '/config',
-];
+import 'package:flufflix/components/pagination/index.dart';
+import 'package:flufflix/core/models/index.dart';
+import 'package:flufflix/core/repositories/index.dart';
+import 'package:flufflix/core/repositories/response/index.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = '/home';
 
-  final Widget child;
-  final int index;
-
-  const HomePage({required this.child, required this.index, super.key});
+  const HomePage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  void changePage(int index) {
-    final route = tabs[index];
-    if (!context.mounted) return;
-    context.go(route, extra: index);
+  late final MovieRepository movieRepository;
+
+  @override
+  void initState() {
+    movieRepository = MovieRepository();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child: widget.child),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: widget.index,
-        onTap: (value) => changePage(value),
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        fixedColor: Colors.green,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Image.asset(
+            "assets/images/madame_web_banner.png",
+            fit: BoxFit.contain,
+            height: 515,
+            width: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15, top: 20),
+            child: PaginationList<Movie, GetPopularMoviesResponse>(
+              getPaginationList: movieRepository.getPopularMovies,
+              listTitle: 'Popular Movies',
+              fetchListErrorMessage: 'Error loading popular movies',
+            ),
+          ),
+          PaginationList<Movie, GetTopRatedMoviesResponse>(
+            getPaginationList: movieRepository.getTopRatedMovies,
+            listTitle: 'Top Rated Movies',
+            fetchListErrorMessage: 'Error loading top rated movies',
+          )
         ],
       ),
     );

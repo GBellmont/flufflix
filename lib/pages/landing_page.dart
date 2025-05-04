@@ -5,7 +5,7 @@ import 'package:flufflix/components/buttons/index.dart';
 import 'package:flufflix/pages/index.dart';
 
 class LandingPage extends StatelessWidget {
-  static const String route = '/login';
+  static const String route = '/landing-page';
 
   const LandingPage({super.key});
 
@@ -52,8 +52,15 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
                 StyledButton(
-                    onPressed: () => context.go(HomePage.route), text: "Login"),
-                StyledButton(onPressed: () {}, text: "Sign Up", primary: false)
+                    onPressed: () => context.go(LoginPage.route),
+                    text: "Login"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: StyledButton(
+                      onPressed: () => context.go(SignUpPage.route),
+                      text: "Sign Up",
+                      primary: false),
+                )
               ],
             ),
           )

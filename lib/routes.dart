@@ -12,11 +12,23 @@ final router = GoRouter(
           return const LandingPage();
         },
       ),
+      GoRoute(
+        path: SignUpPage.route,
+        builder: (context, state) {
+          return const SignUpPage();
+        },
+      ),
+      GoRoute(
+        path: LoginPage.route,
+        builder: (context, state) {
+          return const LoginPage();
+        },
+      ),
       ShellRoute(
           builder: (context, state, child) {
             final index = state.extra ?? 0;
 
-            return HomePage(
+            return HomeWrapperPage(
               index: index as int,
               child: child,
             );
@@ -24,19 +36,19 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: HomePage.route,
-              builder: (context, state) => const InitialPage(),
+              builder: (context, state) => const HomePage(),
             ),
             GoRoute(
               path: '/search',
-              builder: (context, state) => const InitialPage(),
+              builder: (context, state) => const HomePage(),
             ),
             GoRoute(
               path: '/favorites',
-              builder: (context, state) => const InitialPage(),
+              builder: (context, state) => const HomePage(),
             ),
             GoRoute(
               path: '/config',
-              builder: (context, state) => const InitialPage(),
+              builder: (context, state) => const HomePage(),
             )
           ])
     ]);
