@@ -19,19 +19,28 @@ class CacheInterceptor extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final path = options.uri.path;
-    final page = options.uri.queryParameters['page'] ?? '1';
-
+    final page = options.uri.queryParameters['page'];
     final cacheManager = await cacheProvider;
-    final cachedData = cacheManager.getString(_generateCacheKey(path, page));
+    final cacheKey = _generateCacheKey(path, page);
 
-    if (cachedData != null) {
-      return handler.resolve(
-        Response(
-          requestOptions: options,
-          statusCode: 200,
-          data: jsonDecode(cachedData),
-        ),
-      );
+    final cachedRaw = cacheManager.getString(cacheKey);
+
+    if (cachedRaw != null) {
+      final cached = jsonDecode(cachedRaw);
+      final expiry = cached['expiry'] as int;
+      final now = DateTime.now().millisecondsSinceEpoch;
+
+      if (now < expiry) {
+        return handler.resolve(
+          Response(
+            requestOptions: options,
+            statusCode: 200,
+            data: cached['data'],
+          ),
+        );
+      } else {
+        cacheManager.remove(cacheKey);
+      }
     }
 
     return handler.next(options);
@@ -41,15 +50,23 @@ class CacheInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     final path = response.requestOptions.uri.path;
     final page = response.requestOptions.uri.queryParameters['page'] ?? '1';
-
     final cacheManager = await cacheProvider;
-    cacheManager.setString(
-        _generateCacheKey(path, page), jsonEncode(response.data));
 
+    final cacheKey = _generateCacheKey(path, page);
+    const ttl = Duration(minutes: 15);
+
+    final cachedEntry = {
+      'data': response.data,
+      'expiry': DateTime.now().add(ttl).millisecondsSinceEpoch,
+    };
+
+    cacheManager.setString(cacheKey, jsonEncode(cachedEntry));
     return handler.next(response);
   }
 
-  String _generateCacheKey(String path, String page) {
-    return "${baseCacheKey}_${path}_$page";
+  String _generateCacheKey(String path, String? page) {
+    return page != null
+        ? "${baseCacheKey}_${path}_$page"
+        : "${baseCacheKey}_$path";
   }
 }

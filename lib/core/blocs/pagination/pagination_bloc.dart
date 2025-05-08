@@ -13,11 +13,6 @@ class PaginationBloc<T> extends Bloc<PaginationEvent, PaginationState> {
   }
 
   Future<void> _fecthList(FetchPaginationListEvent event, Emitter emit) async {
-    if (state is PaginationInitialState) {
-      final storage = await SharedPreferences.getInstance();
-      await storage.clear();
-    }
-
     emit(PaginationLoadingState());
 
     try {

@@ -78,8 +78,10 @@ class _PaginationList<E extends PaginationCardContract,
                       PaginationSuccessState<T>(data: T responseData) =>
                         SizedBox(
                           height: 180,
-                          child: ListView.builder(
+                          child: ListView.separated(
                             scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(width: 10),
                             itemCount: responseData.list.length +
                                 (!responseData.isFirst ? 1 : 0) +
                                 (!responseData.isLast ? 1 : 0),

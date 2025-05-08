@@ -1,3 +1,4 @@
+export 'package:flufflix/pages/content_details_page.dart';
 export 'package:flufflix/pages/home_wrapper_page.dart';
 export 'package:flufflix/pages/home_page.dart';
 export 'package:flufflix/pages/landing_page.dart';
