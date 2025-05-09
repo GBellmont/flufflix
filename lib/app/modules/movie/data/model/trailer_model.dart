@@ -16,8 +16,6 @@ class TrailerModel extends TrailerEntity implements ContentListItemInterface {
     }
   }
 
-  Map<String, dynamic> get toJson => ({'type': type, 'name': name});
-
   @override
   ContentListItemContract toContentListItemContract() {
     return ContentListItemContract(

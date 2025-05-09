@@ -1,15 +1,22 @@
+import 'package:equatable/equatable.dart';
 import 'package:flufflix/app/modules/movie/domain/contract/contracts.dart';
 
-sealed class ContentDetailsState {}
+sealed class ContentDetailsState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-class ContentInitialState extends ContentDetailsState {}
+class ContentDetailsInitialState extends ContentDetailsState {}
 
-class ContentLoadingState extends ContentDetailsState {}
+class ContentDetailsLoadingState extends ContentDetailsState {}
 
-class ContentErrorState extends ContentDetailsState {}
+class ContentDetailsErrorState extends ContentDetailsState {}
 
-class ContentSuccessState extends ContentDetailsState {
+class ContentDetailsSuccessState extends ContentDetailsState {
   final ContentDetailsContract data;
 
-  ContentSuccessState({required this.data});
+  ContentDetailsSuccessState({required this.data});
+
+  @override
+  List<Object?> get props => [data.id];
 }

@@ -36,7 +36,7 @@ class _ContentListState extends State<ContentList> {
 
     if (widget.options.isNotEmpty) {
       _contentListBloc.add(FecthContentListData(
-          id: widget.contentId,
+          id: widget.options[0].id,
           type: widget.options[0].typeToFetch,
           localContent: widget.options[0].localContent));
     }
@@ -86,7 +86,7 @@ class _ContentListState extends State<ContentList> {
                       ),
                       onPressed: () {
                         _contentListBloc.add(FecthContentListData(
-                            id: widget.contentId,
+                            id: widget.options[index].id,
                             type: widget.options[index].typeToFetch,
                             localContent: widget.options[index].localContent));
                       },

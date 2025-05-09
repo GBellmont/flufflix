@@ -1,3 +1,5 @@
+import 'package:flufflix/app/modules/movie/domain/contract/contracts.dart';
+
 class ContentDetailsContract {
   final int id;
   final String title;
@@ -9,6 +11,7 @@ class ContentDetailsContract {
   final String starring;
   final String creators;
   final String genres;
+  final List<ContentListOptionContract> contentList;
 
   ContentDetailsContract(
       {required this.id,
@@ -20,5 +23,6 @@ class ContentDetailsContract {
       required this.tags,
       required this.starring,
       required this.creators,
-      required this.genres});
+      required this.genres,
+      required this.contentList});
 }

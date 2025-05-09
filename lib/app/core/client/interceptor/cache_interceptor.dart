@@ -1,22 +1,18 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheInterceptor extends Interceptor {
-  SharedPreferences? _preferences;
-  FutureOr<SharedPreferences> get cacheProvider async {
-    _preferences ??= await SharedPreferences.getInstance();
-    return _preferences!;
-  }
+  final SharedPreferences cacheManager;
+
+  const CacheInterceptor({required this.cacheManager});
 
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final path = options.uri.path;
     final page = options.uri.queryParameters['page'];
-    final cacheManager = await cacheProvider;
     final cacheKey = _generateCacheKey(path, page);
 
     final cachedRaw = cacheManager.getString(cacheKey);
@@ -45,8 +41,7 @@ class CacheInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     final path = response.requestOptions.uri.path;
-    final page = response.requestOptions.uri.queryParameters['page'] ?? '1';
-    final cacheManager = await cacheProvider;
+    final page = response.requestOptions.uri.queryParameters['page'];
 
     final cacheKey = _generateCacheKey(path, page);
     const ttl = Duration(minutes: 15);

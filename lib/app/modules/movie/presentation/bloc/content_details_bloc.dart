@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flufflix/app/modules/movie/data/repositories/repositories.dart';
+import 'package:flufflix/app/modules/movie/data/repository/repositories.dart';
 import 'package:flufflix/app/modules/movie/presentation/event/events.dart';
 import 'package:flufflix/app/modules/movie/presentation/state/states.dart';
 
@@ -9,20 +9,19 @@ class ContentDetailsBloc
   final MovieRepositoryImpl movieRepositoryImpl;
 
   ContentDetailsBloc({required this.movieRepositoryImpl})
-      : super(ContentInitialState()) {
+      : super(ContentDetailsInitialState()) {
     on<GetMovieContentEvent>(_fetchMovieDetails);
   }
 
   Future<void> _fetchMovieDetails(
       GetMovieContentEvent event, Emitter emit) async {
-    emit(ContentLoadingState());
+    emit(ContentDetailsLoadingState());
 
-    final response =
-        await movieRepositoryImpl.getMovieDetailsResponse(event.contentId);
+    final response = await movieRepositoryImpl.getMovieDetails(event.contentId);
 
     response.hasError
-        ? emit(ContentErrorState())
-        : emit(ContentSuccessState(
+        ? emit(ContentDetailsErrorState())
+        : emit(ContentDetailsSuccessState(
             data: response.success!.toContentDetailsContract()));
   }
 }
