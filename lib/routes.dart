@@ -24,6 +24,21 @@ final router = GoRouter(
           return const LoginPage();
         },
       ),
+      GoRoute(
+        path: ContentDetailsPage.route,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final title = extra['title'];
+          final posterImage = extra['posterImage'];
+
+          final id = state.pathParameters['id'] ?? "";
+          return ContentDetailsPage(
+            id: id,
+            title: title,
+            posterImage: posterImage,
+          );
+        },
+      ),
       ShellRoute(
           builder: (context, state, child) {
             final index = state.extra ?? 0;

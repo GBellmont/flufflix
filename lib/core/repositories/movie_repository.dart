@@ -33,4 +33,17 @@ class MovieRepository {
 
     return GetTopRatedMoviesResponse.fromJson(response.data);
   }
+
+  Future<GetMovieDetailsResponse> getMovieDetailsResponse(String id) async {
+    final response = await client
+        .get('/movie/$id', queryParameters: {'append_to_response': 'credits'});
+
+    return GetMovieDetailsResponse.fromJson(response.data);
+  }
+
+  Future<GetMovieTrailersResponse> getMovieTrailersResponse(String id) async {
+    final response = await client.get('/movie/$id/videos');
+
+    return GetMovieTrailersResponse.fromJson(response.data);
+  }
 }
