@@ -1,0 +1,49 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flufflix/app/modules/authentication/presentation/event/events.dart';
+import 'package:flufflix/app/modules/authentication/presentation/state/states.dart';
+
+class AuthenticationFormFieldBloc
+    extends Bloc<AuthenticationFormFieldEvent, AuthenticationFormFieldState> {
+  final bool isVisibleContent;
+
+  AuthenticationFormFieldBloc({this.isVisibleContent = true})
+      : super(AuthFormFieldInitialState(isVisibleContent: isVisibleContent)) {
+    on<SetAuthFormFieldValidatedErrorEvent>(_setErrorState);
+    on<SetAuthFormFieldValidatedSuccessEvent>(_setSuccessState);
+    on<ToggleAuthFormFieldVisibilityEvent>(_toggleVisbleInputContent);
+  }
+
+  void _setErrorState(SetAuthFormFieldValidatedErrorEvent event, Emitter emit) {
+    if (state is! AuthFormFieldErrorState) {
+      emit(
+          AuthFormFieldErrorState(isVisibleContent: event.visibleInputContent));
+    }
+  }
+
+  void _setSuccessState(
+      SetAuthFormFieldValidatedSuccessEvent event, Emitter emit) {
+    if (state is! AuthFormFieldSuccessState) {
+      emit(AuthFormFieldSuccessState(
+          isVisibleContent: event.visibleInputContent));
+    }
+  }
+
+  void _toggleVisbleInputContent(
+      ToggleAuthFormFieldVisibilityEvent event, Emitter emit) {
+    switch (state) {
+      case AuthFormFieldInitialState():
+        emit(AuthFormFieldInitialState(
+            isVisibleContent: event.visibleInputContent));
+        break;
+      case AuthFormFieldErrorState():
+        emit(AuthFormFieldErrorState(
+            isVisibleContent: event.visibleInputContent));
+        break;
+      case AuthFormFieldSuccessState():
+        emit(AuthFormFieldSuccessState(
+            isVisibleContent: event.visibleInputContent));
+        break;
+    }
+  }
+}
