@@ -6,28 +6,32 @@
       "type": "dart",
       "request": "launch",
       "flutterMode": "debug",
-      "args": ["--dart-define-from-file=env/example.json"]
+      "args": ["--dart-define-from-file=env/example.json"],
+      "program": "lib/app/main.dart"
     },
     {
       "name": "Run (DEV)",
       "type": "dart",
       "request": "launch",
       "flutterMode": "debug",
-      "args": ["--dart-define-from-file=env/dev.json"]
+      "args": ["--dart-define-from-file=env/dev.json"],
+      "program": "lib/app/main.dart"
     },
     {
       "name": "Run (HML)",
       "type": "dart",
       "request": "launch",
       "flutterMode": "profile",
-      "args": ["--dart-define-from-file=env/hml.json"]
+      "args": ["--dart-define-from-file=env/hml.json"],
+      "program": "lib/app/main.dart"
     },
     {
       "name": "Run (PROD)",
       "type": "dart",
       "request": "launch",
       "flutterMode": "release",
-      "args": ["--dart-define-from-file=env/prod.json"]
+      "args": ["--dart-define-from-file=env/prod.json"],
+      "program": "lib/app/main.dart"
     }
   ]
 }
