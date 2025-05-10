@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/modules/movie/data/model/models.dart';
 import 'package:flufflix/app/modules/movie/domain/contract/content_list_item_contract.dart';
@@ -20,9 +18,6 @@ class MovieTrailersModel extends MovieTrailersEntity<TrailerModel>
       throw SerializerError(stackTrace: stackTrace, error: error);
     }
   }
-
-  String get toJson =>
-      jsonEncode({'results': trailers.map((item) => item.toJson).toList()});
 
   @override
   List<ContentListItemContract> toListContentListItemContract() {

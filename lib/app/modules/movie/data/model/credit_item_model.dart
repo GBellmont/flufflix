@@ -24,10 +24,4 @@ class CreditItemModel extends CreditItemEntity {
       throw SerializerError(stackTrace: stackTrace, error: error);
     }
   }
-
-  Map<String, dynamic> get toJson => {
-        'name': name,
-        'known_for_department': knowForDepartment,
-        'popularity': popularity
-      };
 }

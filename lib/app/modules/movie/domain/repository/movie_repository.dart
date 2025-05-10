@@ -6,8 +6,8 @@ abstract class MovieRepository {
       {int? page});
   Future<AppResponse<GetMoviesEntity<MovieEntity>>> getTopRatedMovies(
       {int? page});
-  Future<AppResponse<MovieDetailsEntity<CreditItemEntity>>>
-      getMovieDetailsResponse(String id);
-  Future<AppResponse<MovieTrailersEntity<TrailerEntity>>>
-      getMovieTrailersResponse(String id);
+  Future<AppResponse<MovieDetailsEntity<CreditItemEntity>>> getMovieDetails(
+      String id);
+  Future<AppResponse<MovieTrailersEntity<TrailerEntity>>> getMovieTrailers(
+      String id);
 }

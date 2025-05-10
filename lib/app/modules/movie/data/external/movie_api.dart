@@ -47,7 +47,7 @@ class MovieApi {
     }
   }
 
-  Future<MovieDetailsModel> getMovieDetailsResponse(String id) async {
+  Future<MovieDetailsModel> getMovieDetails(String id) async {
     try {
       final response = await client.get('/movie/$id',
           queryParameters: {'append_to_response': 'credits'});
@@ -63,7 +63,7 @@ class MovieApi {
     }
   }
 
-  Future<MovieTrailersModel> getMovieTrailersResponse(String id) async {
+  Future<MovieTrailersModel> getMovieTrailers(String id) async {
     try {
       final response = await client.get('/movie/$id/videos');
 

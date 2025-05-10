@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flufflix/app/core/response/responses.dart';
 
-import 'package:flufflix/app/modules/movie/data/repositories/repositories.dart';
+import 'package:flufflix/app/modules/movie/data/repository/repositories.dart';
 import 'package:flufflix/app/modules/movie/domain/interface/interfaces.dart';
 import 'package:flufflix/app/modules/movie/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/movie/presentation/event/events.dart';
@@ -20,7 +20,7 @@ class ContentListBloc extends Bloc<ContentListEvent, ContentListState> {
       _getContentFunction(ContentListFetchTypeEnum type) {
     switch (type) {
       case ContentListFetchTypeEnum.movieTrailers:
-        return movieRepositoryImpl.getMovieTrailersResponse;
+        return movieRepositoryImpl.getMovieTrailers;
     }
   }
 

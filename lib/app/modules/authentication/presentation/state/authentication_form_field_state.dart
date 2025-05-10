@@ -1,7 +1,12 @@
-sealed class AuthenticationFormFieldState {
+import 'package:equatable/equatable.dart';
+
+sealed class AuthenticationFormFieldState extends Equatable {
   final bool isVisibleContent;
 
   const AuthenticationFormFieldState({this.isVisibleContent = true});
+
+  @override
+  List<Object> get props => [isVisibleContent];
 }
 
 class AuthFormFieldInitialState extends AuthenticationFormFieldState {

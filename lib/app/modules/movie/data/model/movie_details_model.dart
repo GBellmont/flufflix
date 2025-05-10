@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/modules/movie/data/model/models.dart';
 import 'package:flufflix/app/modules/movie/domain/contract/contracts.dart';
 import 'package:flufflix/app/modules/movie/domain/entity/entities.dart';
 import 'package:flufflix/app/modules/movie/domain/interface/interfaces.dart';
+import 'package:flufflix/app/modules/movie/presentation/enum/enums.dart';
 
 class MovieDetailsModel extends MovieDetailsEntity<CreditItemModel>
     implements ContentDetailsInterface {
@@ -77,24 +76,6 @@ class MovieDetailsModel extends MovieDetailsEntity<CreditItemModel>
     }
   }
 
-  String get toJson => jsonEncode({
-        'id': id,
-        'title': title,
-        'overview': description,
-        'poster_path': posterImage,
-        'backdrop_path': bannerImage,
-        'release_date': releaseDate,
-        'adult': forAdult,
-        'runtime': runtime,
-        'belongs_to_collection': {'name': collectionName},
-        'vote_average': average,
-        'credits': {
-          'cast': starringActors.map((item) => item.toJson).toList(),
-          'crew': directors.map((item) => item.toJson).toList()
-        },
-        'genres': genres.map((item) => {'name': item}).toList()
-      });
-
   @override
   ContentDetailsContract toContentDetailsContract() {
     final releaseYear = releaseDate?.substring(0, 4) ?? 'Coming soon';
@@ -113,6 +94,22 @@ class MovieDetailsModel extends MovieDetailsEntity<CreditItemModel>
             "$releaseYear | $isAdultFilm | $runtimeMovie | $collectionName | $imdb",
         starring: starringActors.map((item) => item.name).join(','),
         creators: directors.map((item) => item.name).join(','),
-        genres: genres.join(','));
+        genres: genres.join(','),
+        contentList: [
+          ContentListOptionContract(
+              id: id.toString(),
+              title: 'Content',
+              localContent: [
+                ContentListItemContract(
+                  title: 'Movie',
+                  description: 'Complete movie in HD resolution',
+                  runtime: "${runtime}min",
+                )
+              ]),
+          ContentListOptionContract(
+              id: id.toString(),
+              title: 'Additionals',
+              typeToFetch: ContentListFetchTypeEnum.movieTrailers),
+        ]);
   }
 }

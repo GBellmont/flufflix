@@ -18,9 +18,6 @@ class MovieModel extends MovieEntity implements PaginationCardInterface {
     }
   }
 
-  Map<String, dynamic> get toJson =>
-      ({'id': id, 'title': title, 'poster_path': imagePath});
-
   @override
   PaginationCardContract toPaginationCardContract() {
     return PaginationCardContract(id: id, title: title, imagePath: imagePath);

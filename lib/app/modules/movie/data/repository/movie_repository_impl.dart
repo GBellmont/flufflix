@@ -10,10 +10,9 @@ class MovieRepositoryImpl implements MovieRepository {
   const MovieRepositoryImpl({required this.movieApi});
 
   @override
-  Future<AppResponse<MovieDetailsModel>> getMovieDetailsResponse(
-      String id) async {
+  Future<AppResponse<MovieDetailsModel>> getMovieDetails(String id) async {
     try {
-      final response = await movieApi.getMovieDetailsResponse(id);
+      final response = await movieApi.getMovieDetails(id);
 
       return AppResponse<MovieDetailsModel>(success: response);
     } on AppError catch (error, _) {
@@ -24,10 +23,9 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<AppResponse<MovieTrailersModel>> getMovieTrailersResponse(
-      String id) async {
+  Future<AppResponse<MovieTrailersModel>> getMovieTrailers(String id) async {
     try {
-      final response = await movieApi.getMovieTrailersResponse(id);
+      final response = await movieApi.getMovieTrailers(id);
 
       return AppResponse<MovieTrailersModel>(success: response);
     } on AppError catch (error, _) {

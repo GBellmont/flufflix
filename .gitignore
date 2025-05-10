@@ -33,3 +33,6 @@ env/prod.json
 
 # FVM Version Cache
 .fvm/
+
+# flutter coverage
+/coverage/*

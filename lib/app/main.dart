@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flufflix/app/core/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  setupGeneralInjection();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  setupGeneralInjection(prefs: prefs);
+
   runApp(const MyApp());
 }
 

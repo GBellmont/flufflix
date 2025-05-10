@@ -9,8 +9,6 @@ import 'package:flufflix/app/core/config/configs.dart';
 import 'package:flufflix/app/modules/shared/presentation/domain/contract/contracts.dart';
 import 'package:flufflix/app/modules/shared/presentation/widget/widgets.dart';
 
-import 'package:flufflix/app/modules/movie/domain/contract/contracts.dart';
-import 'package:flufflix/app/modules/movie/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/movie/presentation/widget/widgets.dart';
 import 'package:flufflix/app/modules/movie/presentation/bloc/blocs.dart';
 import 'package:flufflix/app/modules/movie/presentation/event/events.dart';
@@ -96,11 +94,11 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
             bloc: _contentBloc,
             builder: (context, state) {
               switch (state) {
-                case ContentInitialState():
-                case ContentLoadingState():
+                case ContentDetailsInitialState():
+                case ContentDetailsLoadingState():
                   return const SliverToBoxAdapter(
                       child: ContentDetailsLoading());
-                case ContentErrorState():
+                case ContentDetailsErrorState():
                   return const SliverToBoxAdapter(
                     child: Center(
                       child: Text(
@@ -109,7 +107,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                       ),
                     ),
                   );
-                case ContentSuccessState(data: var contentContract):
+                case ContentDetailsSuccessState(data: var contentContract):
                   return SliverList(
                     delegate: SliverChildListDelegate([
                       Image.network(
@@ -143,23 +141,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                               contentId: widget.id,
                               defaultImage: contentContract.bannerImage,
                               title: 'Videos',
-                              options: [
-                                ContentListOptionContract(
-                                    title: 'Content',
-                                    localContent: [
-                                      ContentListItemContract(
-                                        title: 'Movie',
-                                        description:
-                                            'Complete movie in HD resolution',
-                                        runtime:
-                                            "${contentContract.runtime}min",
-                                      )
-                                    ]),
-                                const ContentListOptionContract(
-                                    title: 'Additionals',
-                                    typeToFetch:
-                                        ContentListFetchTypeEnum.movieTrailers),
-                              ],
+                              options: contentContract.contentList,
                             ),
                           ],
                         ),

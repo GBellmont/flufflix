@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flufflix/app/core/constants/constants.dart';
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/modules/movie/data/model/models.dart';
@@ -39,12 +37,6 @@ class GetMoviesModel extends GetMoviesEntity<MovieModel>
       throw SerializerError(stackTrace: stackTrace, error: error);
     }
   }
-
-  String get toJson => jsonEncode({
-        'results': list.map((item) => item.toJson).toList(),
-        'total_pages': totalPages,
-        'page': page
-      });
 
   @override
   PaginationListContract toPaginationListContract() {
