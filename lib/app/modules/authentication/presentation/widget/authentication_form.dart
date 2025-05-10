@@ -133,7 +133,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                             value.isNotEmpty &&
                             passwordRegex.hasMatch(value)
                         ? null
-                        : 'Invalid password!\nMust have at least:\n- one uppercase character;\n- one lowercase character;\n- one number;\n- one special character;';
+                        : 'Invalid password!\nMust have at least:\n- eight characters;\n- one uppercase character;\n- one lowercase character;\n- one number;\n- one special character;';
                   }),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),

@@ -1,3 +1,6 @@
+import 'package:flufflix/app/modules/shared/data/external/externals.dart';
+import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
+import 'package:flufflix/app/modules/shared/presentation/bloc/blocs.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,11 +36,14 @@ void verifyIfIsRegistered() {
   expect(getIt.isRegistered<SharedPreferences>(), isTrue);
   expect(getIt.isRegistered<CacheInterceptor>(), isTrue);
   expect(getIt.isRegistered<HttpClient>(), isTrue);
+  expect(getIt.isRegistered<PersistentContentDataSource>(), isTrue);
   expect(getIt.isRegistered<MovieApi>(), isTrue);
   expect(getIt.isRegistered<MovieRepositoryImpl>(), isTrue);
+  expect(getIt.isRegistered<PersistentContentRepositoryImpl>(), isTrue);
   expect(getIt.isRegistered<PaginationBloc>(), isTrue);
   expect(getIt.isRegistered<ContentListBloc>(), isTrue);
   expect(getIt.isRegistered<ContentDetailsBloc>(), isTrue);
+  expect(getIt.isRegistered<PopMenuOptionsBloc>(), isTrue);
   expect(getIt.isRegistered<AuthenticationFormBloc>(), isTrue);
   expect(getIt.isRegistered<AuthenticationFormFieldBloc>(), isTrue);
 }
@@ -52,28 +58,42 @@ void verifySingletonsSameInstance({required SharedPreferences prefs}) {
   final client = getIt.get<HttpClient>();
   final anotherClient = getIt.get<HttpClient>();
 
+  final persitantDataSource = getIt.get<PersistentContentDataSource>();
+  final anotherPersitantDataSource = getIt.get<PersistentContentDataSource>();
+
   final movieApi = getIt.get<MovieApi>();
   final anotherMovieApi = getIt.get<MovieApi>();
 
-  final movieRepositoryImpl = getIt.get<SharedPreferences>();
-  final anotherMovieRepositoryImpl = getIt.get<SharedPreferences>();
+  final movieRepositoryImpl = getIt.get<MovieRepositoryImpl>();
+  final anotherMovieRepositoryImpl = getIt.get<MovieRepositoryImpl>();
+
+  final persistentContentRepositoryImpl = getIt.get<SharedPreferences>();
+  final anotherPersistentContentRepositoryImpl = getIt.get<SharedPreferences>();
 
   expect(identical(prefs, prefsGet), isTrue);
   expect(identical(prefsGet, anotherPrefsGet), isTrue);
   expect(identical(interceptor, anotherInterceptor), isTrue);
   expect(identical(client, anotherClient), isTrue);
+  expect(identical(persitantDataSource, anotherPersitantDataSource), isTrue);
   expect(identical(movieApi, anotherMovieApi), isTrue);
   expect(identical(movieRepositoryImpl, anotherMovieRepositoryImpl), isTrue);
+  expect(
+      identical(persistentContentRepositoryImpl,
+          anotherPersistentContentRepositoryImpl),
+      isTrue);
 }
 
 void verifyDependencies() {
   final movieApi = getIt.get<MovieApi>();
 
   final movieRepositoryImpl = getIt.get<MovieRepositoryImpl>();
+  final persistentContentRepositoryImpl =
+      getIt.get<PersistentContentRepositoryImpl>();
 
   final paginationBloc = getIt.get<PaginationBloc>();
   final contentListBloc = getIt.get<ContentListBloc>();
   final contentDetailsBloc = getIt.get<ContentDetailsBloc>();
+  final popMenuOptionsBloc = getIt.get<PopMenuOptionsBloc>();
 
   expect(identical(movieRepositoryImpl.movieApi, movieApi), isTrue);
   expect(identical(paginationBloc.movieRepositoryImpl, movieRepositoryImpl),
@@ -81,6 +101,10 @@ void verifyDependencies() {
   expect(identical(contentListBloc.movieRepositoryImpl, movieRepositoryImpl),
       isTrue);
   expect(identical(contentDetailsBloc.movieRepositoryImpl, movieRepositoryImpl),
+      isTrue);
+  expect(
+      identical(popMenuOptionsBloc.persistentContentRepositoryImpl,
+          persistentContentRepositoryImpl),
       isTrue);
 }
 

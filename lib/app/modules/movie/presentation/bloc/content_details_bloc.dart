@@ -20,7 +20,8 @@ class ContentDetailsBloc
     final response = await movieRepositoryImpl.getMovieDetails(event.contentId);
 
     response.hasError
-        ? emit(ContentDetailsErrorState())
+        ? emit(ContentDetailsErrorState(
+            message: response.error?.message ?? 'Unexpected Error'))
         : emit(ContentDetailsSuccessState(
             data: response.success!.toContentDetailsContract()));
   }

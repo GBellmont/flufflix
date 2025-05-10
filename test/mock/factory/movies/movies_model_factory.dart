@@ -1,6 +1,6 @@
 import 'package:flufflix/app/modules/movie/data/model/models.dart';
 
-import 'factories.dart';
+import '../factories.dart';
 
 class MoviesModelFactory {
   static MovieDetailsModel getMovieDetailsModel() {
