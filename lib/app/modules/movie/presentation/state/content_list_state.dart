@@ -19,4 +19,11 @@ class ContentListSuccessState extends ContentListState {
   List<Object?> get props => contentList.map((item) => item.title).toList();
 }
 
-class ContentListErrorState extends ContentListState {}
+class ContentListErrorState extends ContentListState {
+  final String message;
+
+  ContentListErrorState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

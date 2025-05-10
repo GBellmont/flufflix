@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flufflix/app/core/client/clients.dart';
 import 'package:flufflix/app/modules/movie/data/external/externals.dart';
 import 'package:flufflix/app/modules/movie/data/repository/repositories.dart';
+import 'package:flufflix/app/modules/shared/data/external/externals.dart';
+import 'package:flufflix/app/modules/shared/data/model/models.dart';
+import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,4 +22,13 @@ class MockHttpClient extends Mock implements HttpClient {}
 
 class MockMovieApi extends Mock implements MovieApi {}
 
+class MockPersistentContentDataSource extends Mock
+    implements PersistentContentDataSource {}
+
 class MockMovieRepositoryImpl extends Mock implements MovieRepositoryImpl {}
+
+class MockPersistentContentRepositoryImpl extends Mock
+    implements PersistentContentRepositoryImpl {}
+
+class PersistentContentModelFake extends Fake
+    implements PersistentContentModel {}

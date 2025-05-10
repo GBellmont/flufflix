@@ -1,12 +1,11 @@
-import 'dart:developer';
+import 'dart:async';
+import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flufflix/app/core/injection/injections.dart';
 import 'package:flufflix/app/core/config/configs.dart';
-
-import 'package:flufflix/app/modules/shared/presentation/domain/contract/contracts.dart';
 import 'package:flufflix/app/modules/shared/presentation/widget/widgets.dart';
 
 import 'package:flufflix/app/modules/movie/presentation/widget/widgets.dart';
@@ -38,20 +37,30 @@ class ContentDetailsPage extends StatefulWidget {
 
 class _ContentDetailsPageState extends State<ContentDetailsPage> {
   late final ContentDetailsBloc _contentBloc;
+  late final StreamSubscription<ContentDetailsState> _contentDetailsStateSub;
 
   @override
   void initState() {
     _contentBloc = getIt.get<ContentDetailsBloc>();
+    _contentDetailsStateSub =
+        _contentBloc.stream.listen(contentDetailsStateListener);
 
     _contentBloc.add(GetMovieContentEvent(contentId: widget.id));
-
     super.initState();
   }
 
   @override
   void dispose() {
+    _contentDetailsStateSub.cancel();
     _contentBloc.close();
     super.dispose();
+  }
+
+  void contentDetailsStateListener(ContentDetailsState state) {
+    if (state is ContentDetailsErrorState) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          StyledSnackBar(text: state.message, type: StyledSnackBarType.error));
+    }
   }
 
   @override
@@ -74,18 +83,15 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                   ),
                   Flexible(
                       child: _TitleText(text: widget.title, ellipsis: true)),
-                  PopMenuButton(options: [
-                    PopMenuOptionContract(
-                      value: 'favorite',
-                      text: 'Favorite',
-                      action: () async => log("tap -> favorite"),
-                    ),
-                    PopMenuOptionContract(
-                      value: 'download',
-                      text: 'Download',
-                      action: () async => log("tap -> download"),
-                    )
-                  ])
+                  PopMenuButton(
+                    id: widget.id,
+                    title: widget.title,
+                    posterImage: widget.posterImage,
+                    options: const [
+                      PopMenuOptionsTypeEnum.favorite,
+                      PopMenuOptionsTypeEnum.download
+                    ],
+                  )
                 ],
               ),
             ),
@@ -98,15 +104,6 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                 case ContentDetailsLoadingState():
                   return const SliverToBoxAdapter(
                       child: ContentDetailsLoading());
-                case ContentDetailsErrorState():
-                  return const SliverToBoxAdapter(
-                    child: Center(
-                      child: Text(
-                        'Erro ao carregar conteúdo',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  );
                 case ContentDetailsSuccessState(data: var contentContract):
                   return SliverList(
                     delegate: SliverChildListDelegate([
@@ -148,6 +145,8 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                       ),
                     ]),
                   );
+                default:
+                  return const SliverToBoxAdapter(child: SizedBox.shrink());
               }
             },
           ),

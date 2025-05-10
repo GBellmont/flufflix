@@ -45,11 +45,13 @@ void main() {
     );
 
     blocTest<ContentDetailsBloc, ContentDetailsState>(
-      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent',
+      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent com message',
       build: () {
         when(() => movieRepositoryImpl.getMovieDetails(id)).thenAnswer(
-            (_) async =>
-                AppResponse(error: AppError(stackTrace: StackTrace.current)));
+            (_) async => AppResponse(
+                error: NetworkError(
+                    stackTrace: StackTrace.current,
+                    message: 'ErrorWithMessage')));
 
         return ContentDetailsBloc(movieRepositoryImpl: movieRepositoryImpl);
       },
@@ -57,7 +59,32 @@ void main() {
       expect: () {
         verify(() => movieRepositoryImpl.getMovieDetails(id)).called(1);
 
-        return [ContentDetailsLoadingState(), ContentDetailsErrorState()];
+        return [
+          ContentDetailsLoadingState(),
+          ContentDetailsErrorState(message: 'ErrorWithMessage')
+        ];
+      },
+    );
+
+    blocTest<ContentDetailsBloc, ContentDetailsState>(
+      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent com message padrão',
+      build: () {
+        when(() => movieRepositoryImpl.getMovieDetails(id))
+            .thenAnswer((_) async => AppResponse(
+                    error: NetworkError(
+                  stackTrace: StackTrace.current,
+                )));
+
+        return ContentDetailsBloc(movieRepositoryImpl: movieRepositoryImpl);
+      },
+      act: (bloc) => bloc.add(GetMovieContentEvent(contentId: '123')),
+      expect: () {
+        verify(() => movieRepositoryImpl.getMovieDetails(id)).called(1);
+
+        return [
+          ContentDetailsLoadingState(),
+          ContentDetailsErrorState(message: 'Unexpected Error')
+        ];
       },
     );
   });
