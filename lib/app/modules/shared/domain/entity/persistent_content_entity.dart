@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
 class PersistentContentEntity extends Equatable {

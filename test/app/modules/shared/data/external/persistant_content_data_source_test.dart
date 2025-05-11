@@ -1,12 +1,13 @@
 import 'dart:convert';
-
-import 'package:flufflix/app/core/error/errors.dart';
-import 'package:flufflix/app/modules/shared/data/external/externals.dart';
-import 'package:flufflix/app/modules/shared/data/model/models.dart';
-import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:flufflix/app/core/error/errors.dart';
+
+import 'package:flufflix/app/modules/shared/data/external/externals.dart';
+import 'package:flufflix/app/modules/shared/data/model/models.dart';
+import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
 import '../../../../../mock/factory/factories.dart';
 import '../../../../../mock/mocks.dart';

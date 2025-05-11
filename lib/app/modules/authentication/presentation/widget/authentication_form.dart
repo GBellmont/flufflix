@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flufflix/app/core/injection/injections.dart';
 
 import 'package:flufflix/app/modules/shared/presentation/widget/widgets.dart';
-import 'package:flufflix/app/modules/movie/presentation/page/pages.dart';
-
+import 'package:flufflix/app/modules/content/presentation/page/pages.dart';
 import 'package:flufflix/app/modules/authentication/presentation/event/events.dart';
 import 'package:flufflix/app/modules/authentication/presentation/page/pages.dart';
 import 'package:flufflix/app/modules/authentication/presentation/widget/widgets.dart';

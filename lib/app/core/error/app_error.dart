@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 
 class AppError implements Exception {

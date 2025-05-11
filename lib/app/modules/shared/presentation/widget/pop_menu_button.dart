@@ -1,14 +1,14 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flufflix/app/core/injection/injections.dart';
+
 import 'package:flufflix/app/modules/shared/presentation/bloc/blocs.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/shared/presentation/event/events.dart';
 import 'package:flufflix/app/modules/shared/presentation/state/states.dart';
 import 'package:flufflix/app/modules/shared/presentation/widget/widgets.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PopMenuButton extends StatefulWidget {
   final String id;

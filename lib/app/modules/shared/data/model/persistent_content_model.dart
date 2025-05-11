@@ -2,7 +2,7 @@ import 'package:flufflix/app/modules/shared/domain/entity/entities.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
 class PersistentContentModel extends PersistentContentEntity {
-  PersistentContentModel(
+  const PersistentContentModel(
       {required super.id,
       required super.title,
       required super.posterImage,

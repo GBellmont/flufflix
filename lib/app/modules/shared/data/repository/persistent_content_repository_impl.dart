@@ -1,5 +1,6 @@
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/core/response/app_response.dart';
+
 import 'package:flufflix/app/modules/shared/data/external/externals.dart';
 import 'package:flufflix/app/modules/shared/data/model/persistent_content_model.dart';
 import 'package:flufflix/app/modules/shared/domain/repository/repositories.dart';
