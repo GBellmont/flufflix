@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flufflix/app/modules/shared/presentation/widget/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,10 +32,14 @@ class ContentList extends StatefulWidget {
 
 class _ContentListState extends State<ContentList> {
   late final ContentListBloc _contentListBloc;
+  late final StreamSubscription<ContentListState> _contentListStateSub;
 
   @override
   void initState() {
     _contentListBloc = getIt.get<ContentListBloc>();
+
+    _contentListStateSub =
+        _contentListBloc.stream.listen(contentListStateListener);
 
     if (widget.options.isNotEmpty) {
       _contentListBloc.add(FecthContentListData(
@@ -46,8 +53,24 @@ class _ContentListState extends State<ContentList> {
 
   @override
   void dispose() {
+    _contentListStateSub.cancel();
     _contentListBloc.close();
     super.dispose();
+  }
+
+  void contentListStateListener(ContentListState state) {
+    switch (state) {
+      case ContentListSuccessState(contentList: var list):
+        if (list.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(StyledSnackBar(
+              text: 'Not found content.', type: StyledSnackBarType.alert));
+        }
+      case ContentListErrorState():
+        ScaffoldMessenger.of(context).showSnackBar(StyledSnackBar(
+            text: state.message, type: StyledSnackBarType.error));
+      default:
+        break;
+    }
   }
 
   @override
@@ -113,7 +136,6 @@ class _ContentListState extends State<ContentList> {
               builder: (context, state) {
                 switch (state) {
                   case ContentListInitialState():
-                    return const ContentListLoading();
                   case ContentListLoadingState():
                     return const ContentListLoading();
                   case ContentListSuccessState(contentList: var list):
@@ -129,7 +151,7 @@ class _ContentListState extends State<ContentList> {
                       },
                       itemCount: list.length,
                     );
-                  case ContentListErrorState():
+                  default:
                     return const SizedBox.shrink();
                 }
               })

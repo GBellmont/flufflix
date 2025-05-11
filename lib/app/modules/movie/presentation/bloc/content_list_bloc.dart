@@ -37,7 +37,8 @@ class ContentListBloc extends Bloc<ContentListEvent, ContentListState> {
     final response = await function(event.id);
 
     response.hasError
-        ? emit(ContentListErrorState())
+        ? emit(ContentListErrorState(
+            message: response.error?.message ?? 'Unexpected Error'))
         : emit(ContentListSuccessState(
             contentList: response.success!.toListContentListItemContract()));
   }

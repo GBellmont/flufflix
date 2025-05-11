@@ -71,7 +71,32 @@ void main() {
     );
 
     blocTest<ContentListBloc, ContentListState>(
-      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent',
+      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent com message',
+      build: () {
+        when(() => movieRepositoryImpl.getMovieTrailers(id)).thenAnswer(
+            (_) async => AppResponse(
+                error: NetworkError(
+                    stackTrace: StackTrace.current,
+                    message: 'Error With Message')));
+
+        return ContentListBloc(movieRepositoryImpl: movieRepositoryImpl);
+      },
+      act: (bloc) => bloc.add(FecthContentListData(
+          id: id,
+          localContent: [],
+          type: ContentListFetchTypeEnum.movieTrailers)),
+      expect: () {
+        verify(() => movieRepositoryImpl.getMovieTrailers(id)).called(1);
+
+        return [
+          ContentListLoadingState(),
+          ContentListErrorState(message: 'Error With Message')
+        ];
+      },
+    );
+
+    blocTest<ContentListBloc, ContentListState>(
+      'emite [ContentDetailsErrorState] ao receber GetMovieContentEvent com message padrão',
       build: () {
         when(() => movieRepositoryImpl.getMovieTrailers(id)).thenAnswer(
             (_) async =>
@@ -86,7 +111,10 @@ void main() {
       expect: () {
         verify(() => movieRepositoryImpl.getMovieTrailers(id)).called(1);
 
-        return [ContentListLoadingState(), ContentListErrorState()];
+        return [
+          ContentListLoadingState(),
+          ContentListErrorState(message: 'Unexpected Error')
+        ];
       },
     );
   });

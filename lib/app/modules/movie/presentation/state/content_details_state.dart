@@ -10,7 +10,14 @@ class ContentDetailsInitialState extends ContentDetailsState {}
 
 class ContentDetailsLoadingState extends ContentDetailsState {}
 
-class ContentDetailsErrorState extends ContentDetailsState {}
+class ContentDetailsErrorState extends ContentDetailsState {
+  final String message;
+
+  ContentDetailsErrorState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
 
 class ContentDetailsSuccessState extends ContentDetailsState {
   final ContentDetailsContract data;

@@ -19,6 +19,11 @@ class SerializerError extends AppError {
       {required super.stackTrace, super.message, required super.error});
 }
 
+class PersistentError extends AppError {
+  PersistentError(
+      {required super.stackTrace, super.message, required super.error});
+}
+
 class NetworkError extends AppError {
   NetworkError({required super.stackTrace, super.message, super.error});
 }

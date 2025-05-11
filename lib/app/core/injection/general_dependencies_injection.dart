@@ -1,4 +1,7 @@
 import 'package:flufflix/app/core/client/interceptor/interceptors.dart';
+import 'package:flufflix/app/modules/shared/data/external/externals.dart';
+import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
+import 'package:flufflix/app/modules/shared/presentation/bloc/blocs.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flufflix/app/core/client/clients.dart';
@@ -28,11 +31,17 @@ void registerProviders({required SharedPreferences prefs}) {
 void registerExternals() {
   getIt.registerLazySingleton<MovieApi>(
       () => MovieApi(client: getIt.get<HttpClient>()));
+  getIt.registerLazySingleton<PersistentContentDataSource>(() =>
+      PersistentContentDataSource(
+          persistentManager: getIt.get<SharedPreferences>()));
 }
 
 void registerRepositories() {
   getIt.registerLazySingleton<MovieRepositoryImpl>(
       () => MovieRepositoryImpl(movieApi: getIt.get<MovieApi>()));
+  getIt.registerLazySingleton<PersistentContentRepositoryImpl>(() =>
+      PersistentContentRepositoryImpl(
+          persistentDataSource: getIt.get<PersistentContentDataSource>()));
 }
 
 void registerBlocs() {
@@ -42,6 +51,9 @@ void registerBlocs() {
       ContentListBloc(movieRepositoryImpl: getIt.get<MovieRepositoryImpl>()));
   getIt.registerFactory<ContentDetailsBloc>(() => ContentDetailsBloc(
       movieRepositoryImpl: getIt.get<MovieRepositoryImpl>()));
+  getIt.registerFactory<PopMenuOptionsBloc>(() => PopMenuOptionsBloc(
+      persistentContentRepositoryImpl:
+          getIt.get<PersistentContentRepositoryImpl>()));
 
   getIt.registerFactory<AuthenticationFormBloc>(() => AuthenticationFormBloc());
   getIt.registerFactoryParam<AuthenticationFormFieldBloc, bool, dynamic>(
