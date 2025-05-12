@@ -500,5 +500,68 @@ void main() {
             PersistentContentFactory.getEmptyContentList())).called(1);
       });
     });
+
+    group('getList', () {
+      test(
+          'deve retornar uma lista vazia quando não houver nenhum dado no repositório',
+          () {
+        when(() => persistentManager.getString(
+                PersistentContentDataSource.persistentContentListKey))
+            .thenReturn(null);
+
+        final response = persistentContentDataSource.getList();
+
+        verify(() => persistentManager.getString(
+            PersistentContentDataSource.persistentContentListKey)).called(1);
+
+        expect(response, []);
+      });
+
+      test(
+          'deve retornar uma lista vazia quando não houverem registros no repositório',
+          () {
+        when(() => persistentManager.getString(
+                PersistentContentDataSource.persistentContentListKey))
+            .thenReturn(PersistentContentFactory.getEmptyContentList());
+
+        final response = persistentContentDataSource.getList();
+
+        verify(() => persistentManager.getString(
+            PersistentContentDataSource.persistentContentListKey)).called(1);
+
+        expect(response, []);
+      });
+
+      test('deve retornar registros quando os mesmos estiverem no repositório',
+          () {
+        when(() => persistentManager.getString(
+                PersistentContentDataSource.persistentContentListKey))
+            .thenReturn(PersistentContentFactory.getPopuledContentList(
+                [PersistentContentFactory.getPersistentContentModel(id, [])]));
+
+        final response = persistentContentDataSource.getList();
+
+        verify(() => persistentManager.getString(
+            PersistentContentDataSource.persistentContentListKey)).called(1);
+
+        expect(response, isA<List<PersistentContentModel>>());
+      });
+
+      test('deve retornar PersistentError quando houver alguma exceção', () {
+        when(() => persistentManager.getString(
+                PersistentContentDataSource.persistentContentListKey))
+            .thenThrow(Exception());
+
+        expect(
+            () => persistentContentDataSource.getList(),
+            throwsA(isA<PersistentError>().having(
+                (item) => item.message,
+                'message',
+                'An error occurred while querying the content list')));
+
+        verify(() => persistentManager.getString(
+            PersistentContentDataSource.persistentContentListKey)).called(1);
+      });
+    });
   });
 }

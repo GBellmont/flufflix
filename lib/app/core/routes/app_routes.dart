@@ -35,6 +35,7 @@ class AppRoutes {
             final extra = state.extra as Map<String, dynamic>;
             final title = extra['title'];
             final posterImage = extra['posterImage'];
+            final releaseYear = extra['releaseYear'];
             final type = extra['type'];
 
             final id = state.pathParameters['id'] ?? "";
@@ -42,6 +43,7 @@ class AppRoutes {
               id: id,
               title: title,
               posterImage: posterImage,
+              releaseYear: releaseYear,
               type: ContentTypeEnum.fromString[type]!,
             );
           },
@@ -65,8 +67,8 @@ class AppRoutes {
                 builder: (context, state) => const HomePage(),
               ),
               GoRoute(
-                path: '/favorites',
-                builder: (context, state) => const HomePage(),
+                path: StoredContentPage.route,
+                builder: (context, state) => const StoredContentPage(),
               ),
               GoRoute(
                 path: '/config',

@@ -1,3 +1,4 @@
+import 'package:flufflix/app/modules/shared/data/model/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -470,6 +471,43 @@ void main() {
         verifyNever(() => persistentContentDataSource.add(any()));
         verify(() => persistentContentDataSource.update(registeredModel))
             .called(1);
+      });
+    });
+
+    group('getList', () {
+      test('deve retornar uma liista vazia caso não ache nenhum registro', () {
+        when(() => persistentContentDataSource.getList()).thenReturn([]);
+
+        final response = persistentContentRepositoryImpl.getList();
+
+        verify(() => persistentContentDataSource.getList()).called(1);
+
+        expect(response, isA<AppResponse<List<PersistentContentModel>>>());
+        expect(response.hasError, isFalse);
+        expect(response.success, []);
+      });
+
+      test('deve retornar erro caso ocorra um AppError', () {
+        when(() => persistentContentDataSource.getList())
+            .thenThrow(AppError(stackTrace: StackTrace.current));
+
+        final response = persistentContentRepositoryImpl.getList();
+
+        verify(() => persistentContentDataSource.getList()).called(1);
+
+        expect(response, isA<AppResponse<List<PersistentContentModel>>>());
+        expect(response.hasError, isTrue);
+        expect(response.error, isA<AppError>());
+      });
+
+      test('deve lançar uma exceção caso a mesma seja genérica', () {
+        when(() => persistentContentDataSource.getList())
+            .thenThrow(Exception());
+
+        expect(() => persistentContentRepositoryImpl.getList(),
+            throwsA(isA<Exception>()));
+
+        verify(() => persistentContentDataSource.getList()).called(1);
       });
     });
   });

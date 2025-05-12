@@ -20,6 +20,7 @@ class PaginationCard extends StatelessWidget {
         context.push(ContentDetailsPage.buildRoute(item.id.toString()), extra: {
           'title': item.title,
           'posterImage': item.imagePath,
+          'releaseYear': item.releaseYear,
           'type': item.type.name
         });
       },

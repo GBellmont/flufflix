@@ -12,7 +12,7 @@ class ContentDetailsLoading extends StatelessWidget {
 
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade800,
-      highlightColor: Colors.grey.shade600,
+      highlightColor: Colors.grey.shade700,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10,

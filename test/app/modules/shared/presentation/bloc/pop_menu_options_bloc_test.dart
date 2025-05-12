@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flufflix/app/modules/content/presentation/enum/enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -18,6 +19,7 @@ import '../../../../../mock/mocks.dart';
 const String id = '123';
 const String title = 'title';
 const String posterImage = 'poster-image';
+const String releaseYear = '2019';
 
 void main() {
   late final PersistentContentRepositoryImpl persistentContentRepositoryImpl;
@@ -72,7 +74,12 @@ void main() {
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
                 const PersistentContentModel(
-                    id: id, title: title, posterImage: posterImage, badges: []),
+                    id: id,
+                    title: title,
+                    posterImage: posterImage,
+                    releaseYear: releaseYear,
+                    badges: [],
+                    type: ContentTypeEnum.movie),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(success: true));
         when(() => persistentContentRepositoryImpl.containBadge(
@@ -84,13 +91,20 @@ void main() {
             title: title,
             posterImage: posterImage,
             activate: true,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));
       },
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
             const PersistentContentModel(
-                id: id, title: title, posterImage: posterImage, badges: []),
+                id: id,
+                title: title,
+                posterImage: posterImage,
+                releaseYear: releaseYear,
+                badges: [],
+                type: ContentTypeEnum.movie),
             PopMenuOptionsTypeEnum.download)).called(1);
         verify(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download)).called(1);
@@ -112,7 +126,12 @@ void main() {
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
                 const PersistentContentModel(
-                    id: id, title: title, posterImage: posterImage, badges: []),
+                    id: id,
+                    title: title,
+                    posterImage: posterImage,
+                    releaseYear: releaseYear,
+                    badges: [],
+                    type: ContentTypeEnum.movie),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(success: false));
 
@@ -120,6 +139,8 @@ void main() {
             id: id,
             title: title,
             posterImage: posterImage,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             activate: true,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));
@@ -127,7 +148,12 @@ void main() {
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
             const PersistentContentModel(
-                id: id, title: title, posterImage: posterImage, badges: []),
+                id: id,
+                title: title,
+                posterImage: posterImage,
+                releaseYear: releaseYear,
+                badges: [],
+                type: ContentTypeEnum.movie),
             PopMenuOptionsTypeEnum.download)).called(1);
         verifyNever(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download));
@@ -146,7 +172,12 @@ void main() {
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
                 const PersistentContentModel(
-                    id: id, title: title, posterImage: posterImage, badges: []),
+                    id: id,
+                    title: title,
+                    posterImage: posterImage,
+                    releaseYear: releaseYear,
+                    badges: [],
+                    type: ContentTypeEnum.movie),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(
                 error: AppError(
@@ -157,6 +188,8 @@ void main() {
             id: id,
             title: title,
             posterImage: posterImage,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             activate: true,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));
@@ -164,7 +197,12 @@ void main() {
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
             const PersistentContentModel(
-                id: id, title: title, posterImage: posterImage, badges: []),
+                id: id,
+                title: title,
+                posterImage: posterImage,
+                releaseYear: releaseYear,
+                badges: [],
+                type: ContentTypeEnum.movie),
             PopMenuOptionsTypeEnum.download)).called(1);
         verifyNever(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download));
@@ -192,6 +230,8 @@ void main() {
             id: id,
             title: title,
             posterImage: posterImage,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             activate: false,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));
@@ -225,6 +265,8 @@ void main() {
             id: id,
             title: title,
             posterImage: posterImage,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             activate: false,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));
@@ -258,6 +300,8 @@ void main() {
             id: id,
             title: title,
             posterImage: posterImage,
+            releaseYear: releaseYear,
+            type: ContentTypeEnum.movie,
             activate: false,
             typeToExecuteAction: PopMenuOptionsTypeEnum.download,
             options: [PopMenuOptionsTypeEnum.download]));

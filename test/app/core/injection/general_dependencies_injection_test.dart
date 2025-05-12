@@ -1,3 +1,4 @@
+import 'package:flufflix/app/modules/content/presentation/store/stores.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,7 @@ void verifyIfIsRegistered() {
   expect(getIt.isRegistered<PopMenuOptionsBloc>(), isTrue);
   expect(getIt.isRegistered<AuthenticationFormBloc>(), isTrue);
   expect(getIt.isRegistered<AuthenticationFormFieldBloc>(), isTrue);
+  expect(getIt.isRegistered<StoredContentStore>(), isTrue);
 }
 
 void verifySingletonsSameInstance({required SharedPreferences prefs}) {
@@ -102,7 +104,6 @@ void verifyDependencies() {
 
   final movieRepositoryImpl = getIt.get<MovieRepositoryImpl>();
   final serieRepositoryImpl = getIt.get<SerieRepositoryImpl>();
-
   final persistentContentRepositoryImpl =
       getIt.get<PersistentContentRepositoryImpl>();
 
@@ -110,6 +111,7 @@ void verifyDependencies() {
   final contentListBloc = getIt.get<ContentListBloc>();
   final contentDetailsBloc = getIt.get<ContentDetailsBloc>();
   final popMenuOptionsBloc = getIt.get<PopMenuOptionsBloc>();
+  final storedContentStore = getIt.get<StoredContentStore>();
 
   expect(identical(movieRepositoryImpl.movieApi, movieApi), isTrue);
   expect(identical(serieRepositoryImpl.serieApi, serieApi), isTrue);
@@ -127,6 +129,10 @@ void verifyDependencies() {
       isTrue);
   expect(
       identical(popMenuOptionsBloc.persistentContentRepositoryImpl,
+          persistentContentRepositoryImpl),
+      isTrue);
+  expect(
+      identical(storedContentStore.persistentContentRepositoryImpl,
           persistentContentRepositoryImpl),
       isTrue);
 }

@@ -6,7 +6,7 @@ import 'package:flufflix/app/modules/content/presentation/page/pages.dart';
 final tabs = [
   HomePage.route,
   '/search',
-  '/favorites',
+  StoredContentPage.route,
   '/config',
 ];
 
@@ -41,8 +41,7 @@ class _HomeWrapperPageState extends State<HomeWrapperPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.archive), label: 'Stored'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
         ],
       ),
