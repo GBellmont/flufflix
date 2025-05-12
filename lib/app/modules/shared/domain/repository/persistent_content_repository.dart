@@ -1,4 +1,5 @@
 import 'package:flufflix/app/core/response/responses.dart';
+
 import 'package:flufflix/app/modules/shared/domain/entity/entities.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 

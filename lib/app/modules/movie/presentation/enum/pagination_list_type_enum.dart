@@ -1,4 +1,0 @@
-enum PaginationListTypeEnum {
-  topRatedMovies,
-  popularMovies;
-}

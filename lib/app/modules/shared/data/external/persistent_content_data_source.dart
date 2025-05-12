@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flufflix/app/core/error/errors.dart';
+
 import 'package:flufflix/app/modules/shared/data/model/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PersistentContentDataSource {
   static const String persistentContentListKey = "Persistent_CONTENT_KEY";

@@ -9,7 +9,7 @@ class AuthInterceptor extends Interceptor {
     options.headers
         .addAll({'Authorization': 'Bearer ${AppConfig.instance.apiKey}'});
     options.queryParameters.addAll({
-      'language': MoviesConstants.defaultPtBrLanguage,
+      'language': ContentConstants.defaultPtBrLanguage,
     });
 
     super.onRequest(options, handler);

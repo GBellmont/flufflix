@@ -1,0 +1,12 @@
+export 'package:flufflix/app/modules/content/data/model/serie/episode_model.dart';
+export 'package:flufflix/app/modules/content/data/model/serie/serie_season_model.dart';
+export 'package:flufflix/app/modules/content/data/model/serie/serie_trailers_model.dart';
+export 'package:flufflix/app/modules/content/data/model/serie/serie_details_model.dart';
+export 'package:flufflix/app/modules/content/data/model/serie/get_series_model.dart';
+export 'package:flufflix/app/modules/content/data/model/serie/serie_model.dart';
+export 'package:flufflix/app/modules/content/data/model/movie/movie_trailers_models.dart';
+export 'package:flufflix/app/modules/content/data/model/trailer_model.dart';
+export 'package:flufflix/app/modules/content/data/model/movie/movie_details_model.dart';
+export 'package:flufflix/app/modules/content/data/model/credit_item_model.dart';
+export 'package:flufflix/app/modules/content/data/model/movie/get_movies_model.dart';
+export 'package:flufflix/app/modules/content/data/model/movie/movie_model.dart';

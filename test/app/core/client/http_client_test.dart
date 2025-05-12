@@ -23,19 +23,22 @@ void main() {
   });
 
   group('HttpClientTest', () {
-    test('deve configurar corretamente o HttpClient com interceptors e baseUrl',
-        () {
-      final client = HttpClient();
+    group('Dependencies', () {
+      test(
+          'deve configurar corretamente o HttpClient com interceptors e baseUrl',
+          () {
+        final client = HttpClient();
 
-      expect(client.options.baseUrl, fakeBaseUrl);
+        expect(client.options.baseUrl, fakeBaseUrl);
 
-      final hasCacheInterceptor =
-          client.interceptors.any((i) => i == mockCacheInterceptor);
-      final hasAuthInterceptor =
-          client.interceptors.any((i) => i.runtimeType == AuthInterceptor);
+        final hasCacheInterceptor =
+            client.interceptors.any((i) => i == mockCacheInterceptor);
+        final hasAuthInterceptor =
+            client.interceptors.any((i) => i.runtimeType == AuthInterceptor);
 
-      expect(hasCacheInterceptor, isTrue);
-      expect(hasAuthInterceptor, isTrue);
+        expect(hasCacheInterceptor, isTrue);
+        expect(hasAuthInterceptor, isTrue);
+      });
     });
   });
 }

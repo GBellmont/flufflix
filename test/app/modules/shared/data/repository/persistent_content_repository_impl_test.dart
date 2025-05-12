@@ -1,10 +1,12 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/core/response/app_response.dart';
+
 import 'package:flufflix/app/modules/shared/data/external/externals.dart';
 import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../../../mock/factory/factories.dart';
 import '../../../../../mock/mocks.dart';

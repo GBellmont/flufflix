@@ -1,10 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flufflix/app/modules/shared/data/model/models.dart';
 import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
 import 'package:flufflix/app/modules/shared/domain/contract/contracts.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/shared/presentation/event/events.dart';
 import 'package:flufflix/app/modules/shared/presentation/state/states.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PopMenuOptionsBloc
     extends Bloc<PopMenuOptionsEvent, PopMenuOptionsState> {

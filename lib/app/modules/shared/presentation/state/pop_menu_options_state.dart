@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'package:flufflix/app/modules/shared/domain/contract/contracts.dart';
 
 sealed class PopMenuOptionsState extends Equatable {

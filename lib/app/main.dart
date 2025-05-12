@@ -1,9 +1,9 @@
-import 'package:flufflix/app/core/injection/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flufflix/app/core/routes/routes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flufflix/app/core/injection/injections.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

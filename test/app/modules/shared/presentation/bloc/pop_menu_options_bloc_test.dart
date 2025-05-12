@@ -1,6 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
 import 'package:flufflix/app/core/error/errors.dart';
 import 'package:flufflix/app/core/response/responses.dart';
+
 import 'package:flufflix/app/modules/shared/data/model/models.dart';
 import 'package:flufflix/app/modules/shared/data/repository/repositories.dart';
 import 'package:flufflix/app/modules/shared/domain/contract/contracts.dart';
@@ -8,8 +12,6 @@ import 'package:flufflix/app/modules/shared/presentation/bloc/blocs.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/shared/presentation/event/pop_menu_options_event.dart';
 import 'package:flufflix/app/modules/shared/presentation/state/states.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../../../mock/mocks.dart';
 
@@ -69,11 +71,8 @@ void main() {
           persistentContentRepositoryImpl: persistentContentRepositoryImpl),
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-                PersistentContentModel(
-                    id: id,
-                    title: title,
-                    posterImage: posterImage,
-                    badges: const []),
+                const PersistentContentModel(
+                    id: id, title: title, posterImage: posterImage, badges: []),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(success: true));
         when(() => persistentContentRepositoryImpl.containBadge(
@@ -90,11 +89,8 @@ void main() {
       },
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-            PersistentContentModel(
-                id: id,
-                title: title,
-                posterImage: posterImage,
-                badges: const []),
+            const PersistentContentModel(
+                id: id, title: title, posterImage: posterImage, badges: []),
             PopMenuOptionsTypeEnum.download)).called(1);
         verify(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download)).called(1);
@@ -115,11 +111,8 @@ void main() {
           persistentContentRepositoryImpl: persistentContentRepositoryImpl),
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-                PersistentContentModel(
-                    id: id,
-                    title: title,
-                    posterImage: posterImage,
-                    badges: const []),
+                const PersistentContentModel(
+                    id: id, title: title, posterImage: posterImage, badges: []),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(success: false));
 
@@ -133,11 +126,8 @@ void main() {
       },
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-            PersistentContentModel(
-                id: id,
-                title: title,
-                posterImage: posterImage,
-                badges: const []),
+            const PersistentContentModel(
+                id: id, title: title, posterImage: posterImage, badges: []),
             PopMenuOptionsTypeEnum.download)).called(1);
         verifyNever(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download));
@@ -155,11 +145,8 @@ void main() {
           persistentContentRepositoryImpl: persistentContentRepositoryImpl),
       act: (bloc) {
         when(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-                PersistentContentModel(
-                    id: id,
-                    title: title,
-                    posterImage: posterImage,
-                    badges: const []),
+                const PersistentContentModel(
+                    id: id, title: title, posterImage: posterImage, badges: []),
                 PopMenuOptionsTypeEnum.download))
             .thenAnswer((_) async => AppResponse(
                 error: AppError(
@@ -176,11 +163,8 @@ void main() {
       },
       expect: () {
         verify(() => persistentContentRepositoryImpl.updateBadgesOrCreate(
-            PersistentContentModel(
-                id: id,
-                title: title,
-                posterImage: posterImage,
-                badges: const []),
+            const PersistentContentModel(
+                id: id, title: title, posterImage: posterImage, badges: []),
             PopMenuOptionsTypeEnum.download)).called(1);
         verifyNever(() => persistentContentRepositoryImpl.containBadge(
             id, PopMenuOptionsTypeEnum.download));

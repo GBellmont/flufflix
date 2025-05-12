@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:flufflix/app/modules/movie/presentation/page/pages.dart';
+import 'package:flufflix/app/modules/content/presentation/page/pages.dart';
+import 'package:flufflix/app/modules/content/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/authentication/presentation/page/pages.dart';
 
 class AppRoutes {
@@ -34,12 +35,14 @@ class AppRoutes {
             final extra = state.extra as Map<String, dynamic>;
             final title = extra['title'];
             final posterImage = extra['posterImage'];
+            final type = extra['type'];
 
             final id = state.pathParameters['id'] ?? "";
             return ContentDetailsPage(
               id: id,
               title: title,
               posterImage: posterImage,
+              type: ContentTypeEnum.fromString[type]!,
             );
           },
         ),
