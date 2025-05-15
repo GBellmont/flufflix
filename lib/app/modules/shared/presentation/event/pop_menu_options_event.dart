@@ -1,3 +1,4 @@
+import 'package:flufflix/app/modules/content/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
 sealed class PopMenuOptionsEvent {}
@@ -13,6 +14,8 @@ class ExecuteOptionActionEvent extends PopMenuOptionsEvent {
   final String id;
   final String title;
   final String posterImage;
+  final String releaseYear;
+  final ContentTypeEnum type;
   final bool activate;
   final PopMenuOptionsTypeEnum typeToExecuteAction;
   final List<PopMenuOptionsTypeEnum> options;
@@ -21,6 +24,8 @@ class ExecuteOptionActionEvent extends PopMenuOptionsEvent {
       {required this.id,
       required this.title,
       required this.posterImage,
+      required this.releaseYear,
+      required this.type,
       required this.activate,
       required this.typeToExecuteAction,
       required this.options});

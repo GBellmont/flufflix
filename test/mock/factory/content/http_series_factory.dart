@@ -11,11 +11,13 @@ class HttpSeriesFactory {
             'id': 1233069,
             'poster_path': '/wqllCospPViEt7AeYIl4ZskKdSj.jpg',
             'name': 'Breaking Bad',
+            'first_air_date': '2025-01-01'
           },
           {
             'id': 1233070,
             'poster_path': '/wqllCospPViEt7AeYIl4ZskKdSk.jpg',
             'name': 'The Minecraft Series',
+            'first_air_date': '2025-01-01'
           }
         ]
       },

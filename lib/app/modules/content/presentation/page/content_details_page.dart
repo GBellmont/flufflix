@@ -20,6 +20,7 @@ class ContentDetailsPage extends StatefulWidget {
   final String id;
   final String title;
   final String posterImage;
+  final String releaseYear;
   final ContentTypeEnum type;
 
   const ContentDetailsPage(
@@ -27,6 +28,7 @@ class ContentDetailsPage extends StatefulWidget {
       required this.id,
       required this.title,
       required this.posterImage,
+      required this.releaseYear,
       required this.type});
 
   static String buildRoute(String id) {
@@ -70,7 +72,6 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.black,
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -89,6 +90,8 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                     id: widget.id,
                     title: widget.title,
                     posterImage: widget.posterImage,
+                    releaseYear: widget.releaseYear,
+                    type: widget.type,
                     options: const [
                       PopMenuOptionsTypeEnum.favorite,
                       PopMenuOptionsTypeEnum.download

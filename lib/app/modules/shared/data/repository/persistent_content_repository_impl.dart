@@ -80,4 +80,16 @@ class PersistentContentRepositoryImpl
       rethrow;
     }
   }
+
+  @override
+  AppResponse<List<PersistentContentModel>> getList() {
+    try {
+      return AppResponse<List<PersistentContentModel>>(
+          success: persistentDataSource.getList());
+    } on AppError catch (error, _) {
+      return AppResponse<List<PersistentContentModel>>(error: error);
+    } catch (error, _) {
+      rethrow;
+    }
+  }
 }

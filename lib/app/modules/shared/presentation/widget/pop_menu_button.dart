@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+import 'package:flufflix/app/modules/content/presentation/enum/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,14 +16,20 @@ class PopMenuButton extends StatefulWidget {
   final String id;
   final String title;
   final String posterImage;
+  final String releaseYear;
+  final ContentTypeEnum type;
   final List<PopMenuOptionsTypeEnum> options;
+  final void Function()? onActionCompleted;
 
   const PopMenuButton(
       {super.key,
       required this.id,
       required this.title,
       required this.posterImage,
-      required this.options});
+      required this.type,
+      required this.releaseYear,
+      required this.options,
+      this.onActionCompleted});
 
   @override
   State<StatefulWidget> createState() => _PopMenuButtonState();
@@ -59,6 +67,10 @@ class _PopMenuButtonState extends State<PopMenuButton> {
       ScaffoldMessenger.of(context).showSnackBar(
           StyledSnackBar(text: state.message, type: StyledSnackBarType.error));
     }
+
+    if (state is PopMenuOptionsSuccessState) {
+      widget.onActionCompleted.call();
+    }
   }
 
   @override
@@ -80,6 +92,8 @@ class _PopMenuButtonState extends State<PopMenuButton> {
                         id: widget.id,
                         title: widget.title,
                         posterImage: widget.posterImage,
+                        releaseYear: widget.releaseYear,
+                        type: widget.type,
                         activate: !option.isActive,
                         typeToExecuteAction: option.type,
                         options: widget.options));

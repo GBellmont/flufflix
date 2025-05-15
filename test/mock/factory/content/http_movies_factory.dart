@@ -11,11 +11,13 @@ class HttpMoviesFactory {
             'id': 1233069,
             'poster_path': '/wqllCospPViEt7AeYIl4ZskKdSj.jpg',
             'title': 'Exterritorial',
+            'release_date': '2025-01-01'
           },
           {
             'id': 1233070,
             'poster_path': '/wqllCospPViEt7AeYIl4ZskKdSk.jpg',
             'title': 'The Minecraft Movie',
+            'release_date': '2025-01-01'
           }
         ]
       },

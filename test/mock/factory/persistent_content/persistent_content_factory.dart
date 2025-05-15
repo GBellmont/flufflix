@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flufflix/app/modules/content/presentation/enum/enums.dart';
 import 'package:flufflix/app/modules/shared/data/model/models.dart';
 import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
@@ -14,5 +15,7 @@ class PersistentContentFactory {
           id: id,
           title: 'Teste Content',
           posterImage: 'Poster Image',
+          releaseYear: '2019',
+          type: ContentTypeEnum.movie,
           badges: badges);
 }

@@ -72,6 +72,17 @@ class PersistentContentDataSource {
     }
   }
 
+  List<PersistentContentModel> getList() {
+    try {
+      return _getVerifiedPersistentContentList();
+    } catch (error, stackTrace) {
+      throw PersistentError(
+          stackTrace: stackTrace,
+          error: error,
+          message: 'An error occurred while querying the content list');
+    }
+  }
+
   List<PersistentContentModel> _getVerifiedPersistentContentList() {
     final contentListString =
         persistentManager.getString(persistentContentListKey) ??

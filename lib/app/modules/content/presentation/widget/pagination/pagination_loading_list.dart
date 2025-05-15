@@ -13,8 +13,8 @@ class PaginationLoadingList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: 10,
         itemBuilder: (_, index) => Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
+          baseColor: Colors.grey.shade800,
+          highlightColor: Colors.grey.shade700,
           child: Container(
             height: 180,
             width: 120,

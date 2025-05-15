@@ -1,3 +1,5 @@
+export 'package:flufflix/app/modules/content/presentation/widget/stored_content/stored_content_card.dart';
+export 'package:flufflix/app/modules/content/presentation/widget/stored_content/stored_content_loading.dart';
 export 'package:flufflix/app/modules/content/presentation/widget/content_details/content_loading.dart';
 export 'package:flufflix/app/modules/content/presentation/widget/content_details/content_list.dart';
 export 'package:flufflix/app/modules/content/presentation/widget/content_details/conten_list_loading.dart';

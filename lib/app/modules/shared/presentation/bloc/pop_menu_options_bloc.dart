@@ -35,6 +35,8 @@ class PopMenuOptionsBloc
               id: event.id,
               title: event.title,
               posterImage: event.posterImage,
+              releaseYear: event.releaseYear,
+              type: event.type,
               badges: const []),
           event.typeToExecuteAction),
       false => await persistentContentRepositoryImpl.removeBadgeOrDelete(

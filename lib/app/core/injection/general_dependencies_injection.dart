@@ -1,3 +1,4 @@
+import 'package:flufflix/app/modules/content/presentation/store/stores.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +20,7 @@ void setupGeneralInjection({required SharedPreferences prefs}) {
   registerExternals();
   registerRepositories();
   registerBlocs();
+  registerStores();
 }
 
 void registerProviders({required SharedPreferences prefs}) {
@@ -66,4 +68,10 @@ void registerBlocs() {
   getIt.registerFactoryParam<AuthenticationFormFieldBloc, bool, dynamic>(
       (isVisibleContent, _) =>
           AuthenticationFormFieldBloc(isVisibleContent: isVisibleContent));
+}
+
+void registerStores() {
+  getIt.registerFactory<StoredContentStore>(() => StoredContentStore(
+      persistentContentRepositoryImpl:
+          getIt.get<PersistentContentRepositoryImpl>()));
 }

@@ -5,6 +5,7 @@ import 'package:flufflix/app/modules/shared/presentation/enum/enums.dart';
 
 abstract class PersistentContentRepository<T extends PersistentContentEntity> {
   AppResponse<bool> containBadge(String id, PopMenuOptionsTypeEnum type);
+  AppResponse<List<T>> getList();
   Future<AppResponse<bool>> updateBadgesOrCreate(
       T entity, PopMenuOptionsTypeEnum newBadge);
   Future<AppResponse<bool>> removeBadgeOrDelete(
